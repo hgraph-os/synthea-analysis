@@ -25,3 +25,22 @@ meteor --settings packages/synthea-analysis/configs/settings.example.json  --ext
 ```
 
 
+
+#### Generating a synthetic dataset
+
+```bash
+# download synthea
+# this version of synthea is configured with cardiac data
+# and exports DSTU2 files
+git clone https://github.com/PatientInsight/Synthea.git
+cd synthea
+
+# build the utility
+./gradlew build check test
+
+# rebuild the utility with the updated modules
+./gradlew build check test
+
+# run synthea and create a few thousand test patients
+./run_synthea -s 12345 -m *covid* -p 1000 Illinois "Chicago"  
+```
