@@ -2,45 +2,49 @@
 
 This package is for analyzing Synthea datasets using the hGraph visualization.  
 
+#### Generating a synthetic dataset
+
+```bash
+# download synthea
+git clone https://github.com/synthetichealth/synthea
+cd synthea
+
+# build the utility
+./gradlew build check test
+
+# generate a thousand test patients
+./run_synthea -s 12345 -m covid19 -p 1000 Illinois "Chicago"  
+```
+
 
 #### Clone the Example Plugin      
 
 ```bash
+#install meteor
+curl https://install.meteor.com/ | sh
+
+# clone the node-on-fhir boilerplate  
 git clone https://github.com/symptomatic/node-on-fhir  
 
-cd node-on-fhir/packages
+# navigate to the packages directory, and clone the synthea-analysis package into it
+cd node-on-fhir  
+cd packages  
 git clone https://github.com/symptomatic/synthea-analysis
 
+# return to the project root 
 cd ..
 ```
 
 #### Run Meteor on FHIR with your plugin  
 
 ```bash
-# add your package
+# install dependencies and libraries
 meteor npm install
 
-# run with a custom settings file
+# run with a custom settings file, using the extra package  
 meteor --settings packages/synthea-analysis/configs/settings.example.json  --extra-packages goinvo:synthea-analysis
 ```
 
 
 
-#### Generating a synthetic dataset
-
-```bash
-# download synthea
-# this version of synthea is configured with cardiac data
-# and exports DSTU2 files
-git clone https://github.com/PatientInsight/Synthea.git
-cd synthea
-
-# build the utility
-./gradlew build check test
-
-# rebuild the utility with the updated modules
-./gradlew build check test
-
-# run synthea and create a few thousand test patients
-./run_synthea -s 12345 -m *covid* -p 1000 Illinois "Chicago"  
-```
+ 
