@@ -15,7 +15,7 @@ Package.onUse(function(api) {
     api.use('session');
     api.use('mongo');
      
-    api.use('clinical:hl7-fhir-data-infrastructure@6.7.0');
+    api.use('clinical:hl7-fhir-data-infrastructure@6.7.1');
 
     api.addAssets('data/Agustín529_Caldera106_01358a2c-d615-85fe-1665-cbb1b3feeeaa.json', 'client');
     api.addAssets('data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json', 'client');
@@ -119,8 +119,10 @@ Package.onUse(function(api) {
     api.addAssets('data/Willie882_Glover433_b5912d7b-c49f-c0f0-914d-a5a8741a2414.json', 'client');
     api.addAssets('data/Xochitl483_Bailey598_613bc38b-65ba-2011-2bf8-b2e9fb135b9e.json', 'client');
 
-    api.addFiles('lib/methods.js', 'client');
-
+    api.addFiles('lib/methods.js', 'server');
+    api.addFiles('lib/Collections.js', ['client', 'server']);
+    api.addFiles('lib/MedicalRecordImporter.js', ['client', 'server']);
+    
     api.mainModule('index.jsx', 'client');
 });
 

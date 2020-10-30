@@ -82,8 +82,8 @@
           "Theme": false,
           "ConstructionZone": false,
           "Navbars": true,
-          "DataImport": false,
-          "DataExport": false,
+          "DataImport": true,
+          "DataExport": true,
           "HealthRecords": false,
           "Login": {
             "availability": "web"
@@ -106,7 +106,6 @@
           "/contracts",
           "/claims",
           "/endpoints",
-          "/explanation-of-benefits",
           "/example-route",
           "/goals",
           "/hello-world",
@@ -197,10 +196,36 @@
         "ContinuityOfCare": true,
         "Videoconferencing": true,
         "ZygoteAvatar": true        
-      }      
+      },
+      "fhir": {
+        "AllergyIntolerances": true,
+        "AuditEvents": true,
+        "BodySites": true,
+        "CarePlans": true,
+        "Conditions": true,
+        "Devices": true,
+        "DiagnosticReports": true,
+        "Goals": true,
+        "ImagingStudies": true,
+        "Immunizations": true,
+        "Locations": true,
+        "Lists": true,
+        "Medications": true,
+        "MedicationOrders": true,
+        "MedicationStatements": true,
+        "Organizations": true,
+        "Observations": true,
+        "Patients": true,
+        "Practitioners": true,
+        "Procedures": true,
+        "Questionnaires": true,
+        "RiskAssessments": true
+      }
     }
   },
   "private": {
+    "practitionerAccessCode": "hippocrates",
+    "sysadminAccessCode": "rootaccess",
     "disableOauth": true,
     "demo": {
       "nightlyDatabaseDrop": true
