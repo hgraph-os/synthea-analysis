@@ -45,7 +45,7 @@ meteor npm install
 run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages symptomatic:data-management,symptomatic:hgraph-on-fhir,goinvo:synthea-analysis
 
 # run with a custom settings file, using the extra package  
-INITIALIZE_SYNTHEA_DATA=true meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages symptomatic:data-management,symptomatic:hgraph-on-fhir,goinvo:synthea-analysis
+INITIALIZE_SYNTHEA_DATA=true meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages goinvo:synthea-analysis
 
 ```
 
