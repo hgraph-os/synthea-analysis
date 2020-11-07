@@ -122,21 +122,18 @@ Package.onUse(function(api) {
     api.addFiles('lib/methods.js', 'server');
     api.addFiles('lib/Collections.js', ['client', 'server']);
     api.addFiles('lib/MedicalRecordImporter.js', ['client', 'server']);
-    
+
     api.mainModule('index.jsx', 'client');
 });
 
 
-Npm.depends({
-    "@nivo/core": "0.63.0",
-    "@nivo/pie": "0.63.1",
-    "@nivo/radar": "0.63.1",
+Npm.depends({    
+    // "@nivo/core": "0.61.0",
+    // "@nivo/radar": "0.61.1",
+    // "@nivo/pie": "0.61.1",
+
+    // "hgraph-react": "0.0.7",
+
     "read-directory": "3.0.2",
-    "moment": "2.20.1",
-    "lodash": "4.17.4",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "simpl-schema": "1.5.3",
-    "hgraph-react": "0.0.7",
-    "d3-scale": "3.0.1"
+    "d3-scale": "3.0.1"    
 })

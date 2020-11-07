@@ -14,7 +14,7 @@
         "secondaryColor": "#06a9ac",
         "secondaryText": "rgba(255, 255, 255, 1) !important",
       
-        "cardColor": "#ffffff !important",
+        "cardColor": "#eeeeee !important",
         "cardTextColor": "rgba(0, 0, 0, 1) !important",
       
         "errorColor": "rgb(128,20,60) !important",
@@ -23,10 +23,10 @@
         "appBarColor": "rgb(108, 183, 110) !important",
         "appBarTextColor": "#ffffff !important",
       
-        "paperColor": "#ffffff !important",
+        "paperColor": "#eeeeee !important",
         "paperTextColor": "rgba(0, 0, 0, 1) !important",
       
-        "backgroundCanvas": "#eeeeee",
+        "backgroundCanvas": "#ffffff",
         "nivoTheme": "purple_orange"
       },
       "grayscaleFilter": "0%"
@@ -127,7 +127,6 @@
           "/questionnaires",
           "/questionnaire-responses",
           "/subscriptions",
-          "/tasks",
           "/workqueue",
           "/vitals-tracking",
           "/valuesets"

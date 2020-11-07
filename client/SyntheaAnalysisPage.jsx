@@ -108,12 +108,21 @@ let sampleData = [
   },
   {
     "metric": "temperature",
-    "label": "Body temperature",
+    "label": "Body temperature (F)",
     "healthMin": 96,
     "healthMax": 99,
-    "absoluteMin": 94,
-    "absoluteMax": 106,
+    "absoluteMin": 90,
+    "absoluteMax": 108,
     "value": 98.6
+  },
+  {
+    "metric": "temperatureCelcius",
+    "label": "Body temperature (C)",
+    "healthMin": 36,
+    "healthMax": 38,
+    "absoluteMin": 32,
+    "absoluteMax": 42,
+    "value": 37
   },
   // {
   //   "metric": "alcoholUse",
@@ -412,7 +421,24 @@ export class SyntheaAnalysisPage extends React.Component {
             console.log('Most recent temperature observation', lastTemperatureObservation);
             datum.value = get(lastTemperatureObservation, 'valueQuantity.value');
             datum.weight = 30;
-            resultingData.push(datum);  
+            if(get(lastTemperatureObservation, 'valueQuantity.unit') === "F"){
+              resultingData.push(datum);  
+            }            
+          }
+          break;
+        case "temperatureCelcius":
+          let lastCelciusObservation = Observations.find({$or: [
+            { 'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId'), 'code.coding.code': '8310-5' },
+            { 'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId'), 'code.coding.code': '8331-1' },
+          ]}, {sort: {'effectiveDateTime': -1}
+          }).fetch()[0];
+          if(lastCelciusObservation){
+            console.log('Most recent temperature observation', lastCelciusObservation);
+            datum.value = get(lastCelciusObservation, 'valueQuantity.value');
+            datum.weight = 30;
+            if(get(lastCelciusObservation, 'valueQuantity.unit') === "Cel"){
+              resultingData.push(datum);  
+            }
           }
           break;
         case "pulse":

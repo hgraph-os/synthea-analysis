@@ -120,11 +120,18 @@
       "unitLabel": "%"
     },
     "temperature": {
-      "label": "Body temperature",
+      "label": "Body temperature (F)",
       "healthyRange": [97, 99],
       "absoluteRange": [95, 105],
       "weight": 10,
       "unitLabel": "F"
+    },
+    "temperatureCelcius": {
+      "label": "Body temperature (C)",
+      "healthyRange": [36, 38],
+      "absoluteRange": [32, 42],
+      "weight": 10,
+      "unitLabel": "Cel"
     }
   },
   "female": {
