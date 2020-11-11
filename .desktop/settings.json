@@ -1,0 +1,115 @@
+{
+    "name": "Synthea Surfer",
+    "version": "0.1.0",
+    "projectName": "SyntheaSurfer",
+    "devTools": true,
+    "devtron": true,
+    "desktopHCP": true,
+    "desktopHCPIgnoreCompatibilityVersion": false,
+    "squirrel": {
+        "autoUpdateFeedUrl": "http://localhost/update/:platform/:version",
+        "autoUpdateFeedHeaders": {},
+        "autoUpdateCheckOnStart": false
+    },
+    "webAppStartupTimeout": 60000,
+    "exposeLocalFilesystem": false,
+    "allowOriginLocalServer": false,
+    "window": {
+        "icon": "@assets/meteor.png",
+        "_windows": {
+            "icon": "@assets/meteor.ico"
+        },
+        "webPreferences": {
+            "nativeWindowOpen": true,
+            "nodeIntegrationInWorker": true,
+            "width": 1920,
+            "height": 1200,
+            "center": true,
+            "resizable": true,
+            "maximizable": true,
+            "minimizable": true,
+            "movable": true
+		}
+    },
+    "windowDev": {
+    },
+    "uglify": true,
+    "plugins": {
+        "meteor-desktop-splash-screen": {
+            "version": "0.5.0",
+            "windowSettings": {
+                "width": 1920,
+                "height": 1200
+            },
+            "updateScreen": true,
+            "updateScreenSettings": {
+                "imagePath": "updating.gif",
+                "windowSettings": {
+                    "width": 400,
+                    "height": 300
+                },
+                "clickThrough": false,
+                "style": {
+                    "background-size": "auto"
+                }
+            }
+        }
+    },
+    "dependencies": {},
+    "packageJsonFields": {
+        "description": "Synthea Surfer - Utility for visualizing Synthea data.",
+        "author": "Abigail Watson",
+        "private": true
+    },
+    "builderOptions": {
+        "icon": ".desktop/assets/meteor.ico",
+        "appId": "goinvo.app.synthea.surfer",
+        "productName": "Synthea Surfer ",
+        "compression": "maximum",
+        "win": {
+            "target": "nsis"
+        },
+        "squirrelWindows": {
+            "iconUrl": "https://github.com/wojtkowiak/meteor-desktop/blob/beta/scaffold/assets/meteor.ico?raw=true",
+            "loadingGif": ".desktop/assets/loading.gif"
+        },
+        "publish": [
+            {
+                "provider": "generic",
+                "url": "http://localhost:8080/"
+            }
+        ],
+        "mac": {
+            "icon": ".desktop/assets/meteor.icns"
+        },
+        "dmg": {
+            "icon": ".desktop/assets/meteor.icns",
+            "background": ".desktop/assets/dmgBackground.png",
+            "iconSize": 54,
+            "contents": [
+                { "x": 377, "y": 190, "type": "link", "path": "/Applications" },
+                { "x": 63, "y": 190, "type": "file" }
+            ],
+            "window": {
+                "width": 480,
+                "height": 300
+            }
+        }
+    },
+    "packagerOptions": {
+        "icon": ".desktop/assets/meteor.ico",
+        "_osx": {
+            "icon": ".desktop/assets/meteor.icns"
+        },
+        "appVersion": "@0.1.0",
+        "buildVersion": "@0.1.0",
+        "appCopyright": "Copyright 2020, Symptomatic - All rights reserved.",
+        "win32metadata": {
+            "CompanyName": "Symptomatic",
+            "FileDescription": "SyntheaSurfer",
+            "OriginalFilename": "SyntheaSurfer.exe",
+            "ProductName": "Synthea Surfer",
+            "InternalName": "SyntheaSurfer.exe"
+        }
+    }
+}

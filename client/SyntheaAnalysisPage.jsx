@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ReactMeteorData } from 'meteor/react-meteor-data';
+// import React from 'react';
+// import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
@@ -167,8 +167,6 @@ const hGraphConvert = (gender, metric, data) => {
 
   return {
     label: data.label || metricObj.label,
-    // value: sortedValues[sortedValues.length - 1].value,
-    // values: sortedValues,
     value: data.value || metricObj.value[0],
     values: data.values,
 
@@ -187,73 +185,11 @@ const hGraphConvert = (gender, metric, data) => {
 Session.setDefault('hideToggles', true);
 Session.setDefault('systemOfMeasurement', 'imperial');
 
-export class SyntheaAnalysisPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  calculateScoreFromMetric(metric){
-    let scale;
-  
-    // TODO: Review score calcs
-    if (metric.value > metric.healthyMax) {
-      // if it's high, healthyMax to absoluteMax, 1 to 0
-      scale = scaleLinear()
-        .domain([metric.healthyMax, metric.absoluteMax])
-        .range([1, 0]);
-    } else if (metric.value < metric.healthyMin) {
-      // if it's low, healthyMin to absolute Min, 1 to 0
-      scale = scaleLinear()
-        .domain([metric.healthyMin, metric.absoluteMin])
-        .range([1, 0]);
-    } else {
-      // if it's healthy, perfect score
-      return 1;
-    }
-  
-    return scale(metric.value);
-  }
-  calculateHealthScore(data){
-    // TODO: Review score calcs
 
-    let totalWeight = 0;
-    data.map(d => {
-      totalWeight += d.weight;
-    });
+export function SyntheaAnalysisPage(props){
 
-    if (totalWeight !== 100) {
-      console.log("Total weight of values does not equal 100%");
-    }
 
-    let scoreTotal = 0;
-
-    data.map(d => {
-      const score = this.calculateScoreFromMetric(d);
-      const weightPercentage = d.weight / 100;
-      const weightedScore = weightPercentage * score;
-      scoreTotal += weightedScore;
-    });
-
-  return scoreTotal * 100;
-  }
-  convertDataSet(data){
-    console.log('Converting data set', data)
-    return data.map(d => {
-      const converted = hGraphConvert('male', d.metric, d);
-      converted.id = d.metric;
-      if (d.children) {
-        converted.children = d.children.map(c => {
-          const convertedChild = hGraphConvert('male', c.metric, c);
-          convertedChild.parentKey = c.parentKey;
-          convertedChild.id = c.metric;
-          return convertedChild;
-        })
-      }
-      return converted;
-    });
-  }
-  getMeteorData() {
-
-    let imgHeight = (Session.get('appHeight') - 210) / 3;
+  let imgHeight = (Session.get('appHeight') - 210) / 3;
 
     let data = {
       style: {
@@ -354,7 +290,6 @@ export class SyntheaAnalysisPage extends React.Component {
       patientsCount: Patients.find().count(),
       selectedPatientId: Session.get('selectedPatientId')  
     };
-
 
     // update sample dataset
     let components;
@@ -615,130 +550,188 @@ export class SyntheaAnalysisPage extends React.Component {
     //}
 
     console.log("SyntheaAnalysisPage[data]", data);
-    return data;
-  }
 
-  rowClick(){
+
+
+  function calculateScoreFromMetric(metric){
+    let scale;
+  
+    // TODO: Review score calcs
+    if (metric.value > metric.healthyMax) {
+      // if it's high, healthyMax to absoluteMax, 1 to 0
+      scale = scaleLinear()
+        .domain([metric.healthyMax, metric.absoluteMax])
+        .range([1, 0]);
+    } else if (metric.value < metric.healthyMin) {
+      // if it's low, healthyMin to absolute Min, 1 to 0
+      scale = scaleLinear()
+        .domain([metric.healthyMin, metric.absoluteMin])
+        .range([1, 0]);
+    } else {
+      // if it's healthy, perfect score
+      return 1;
+    }
+  
+    return scale(metric.value);
+  }
+  function calculateHealthScore(data){
+    // TODO: Review score calcs
+
+    let totalWeight = 0;
+    data.map(d => {
+      totalWeight += d.weight;
+    });
+
+    if (totalWeight !== 100) {
+      console.log("Total weight of values does not equal 100%");
+    }
+
+    let scoreTotal = 0;
+
+    data.map(d => {
+      const score = this.calculateScoreFromMetric(d);
+      const weightPercentage = d.weight / 100;
+      const weightedScore = weightPercentage * score;
+      scoreTotal += weightedScore;
+    });
+
+    return scoreTotal * 100;
+  }
+  function convertDataSet(data){
+    console.log('Converting data set', data)
+    return data.map(d => {
+      const converted = hGraphConvert('male', d.metric, d);
+      converted.id = d.metric;
+      if (d.children) {
+        converted.children = d.children.map(c => {
+          const convertedChild = hGraphConvert('male', c.metric, c);
+          convertedChild.parentKey = c.parentKey;
+          convertedChild.id = c.metric;
+          return convertedChild;
+        })
+      }
+      return converted;
+    });
+  }
+  function rowClick(){
     console.log('rowClick')
   }
-  render() {
-
-    let headerHeight = LayoutHelpers.calcHeaderHeight();
-    let formFactor = LayoutHelpers.determineFormFactor(2);
-
-    // small web window
-    let graphSize = (window.innerWidth - 172) * 0.5;
-
-    // double card layout (smaller)
-    if(window.innerWidth > 768){
-      graphSize = (window.innerWidth - 172) * 0.4;
-    }
-
-    // iphone & ipad
-    if(Meteor.isCordova){
-      graphSize = window.innerWidth - 200;
-    }
-
-    let themePrimaryColor = get(Meteor, 'settings.public.theme.palette.primaryColor')
-
-    let paddingWidth = 84;
-    if(Meteor.isCordova){
-      paddingWidth = 20;
-    }
-
-    let cardWidth = window.innerWidth - paddingWidth;
-
-    let columnVisibility = {
-      sampledData: false,
-      codeValue: true
-    }
-
-    if(window.innerWidth > 1600){
-      columnVisibility.sampledData = true;
-    }
-    if(Meteor.isCordova){
-      columnVisibility.codeValue = false;
-    }
-
-
-
-    return (
-      <PageCanvas id='syntheaAnalysisPage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
-        <Grid container style={{marginTop: '40px', marginBottom: '80px'}}>            
-          <Grid item md={6}>
-            <StyledCard margins={20} >
-              <CardHeader 
-                title={this.data.patientsCount + " Patients"}
-                />
-              <CardContent style={{fontSize: '180%'}}>
-                <PatientsTable 
-                  patients={Patients.find().fetch()}
-                  count={Patients.find().count()}
-                  hideIdentifier={true}
-                  hideActionIcons={true}
-                  hideAddress={true}
-                  hideCity={true}
-                  hideState={true}
-                  hidePostalCode={true}
-                  hideCountry={true}
-                  hideMaritalStatus={true}
-                  hideLanguage={true}
-                  hideActive={true}
-                  hideSystemBarcode={true}
-                  rowsPerPage={5}
-                  selectedPatientId={this.data.selectedPatientId}
-                  onRowClick={function(id){
-                    Session.set('selectedPatientId', id);
-                    Session.set('selectedPatient', Patients.findOne({id: id}))
-                  }}
-                />                      
-              </CardContent>
-            </StyledCard>
-            <DynamicSpacer />
-            <StyledCard margins={20} >
-              <CardHeader 
-                title={this.data.observationsCount + " Observations associated with the selected Patient"}
-                />
-              <CardContent style={{fontSize: '180%'}}>
-                <ObservationsTable 
-                  observations={this.data.observations}
-                  count={this.data.observationsCount}
-                  multiline={true}
-                  rowsPerPage={10}
-                />                      
-              </CardContent>
-            </StyledCard>
-
-          </Grid>
-          <Grid item md={6}>
-            <HGraph
-              data={ this.data.currentYearData }
-              score={ this.data.currentScore }
-              width={ graphSize }
-              height={ graphSize }
-              fontSize={ graphSize < 300 ? 10 : 16 }
-              pointRadius={ graphSize < 300 ? 5 : 10 }
-              scoreFontSize={ graphSize < 300 ? 48 : 96 }
-              healthyRangeFillColor={themePrimaryColor}
-              showScore={true}
-              margin={{ top: 72, right: 72, bottom: 72, left: 72 }}
-            />     
-          </Grid>
-        </Grid>          
-      </PageCanvas>
-    );
-  }
-
-
-
-
-  openLink(url){
+  function openLink(url){
     console.log("openLink", url);
-    browserHistory.push(url);
+    // browserHistory.push(url);
   }
+
+
+  let headerHeight = LayoutHelpers.calcHeaderHeight();
+  let formFactor = LayoutHelpers.determineFormFactor(2);
+
+  // small web window
+  let graphSize = (window.innerWidth - 172) * 0.5;
+
+  // double card layout (smaller)
+  if(window.innerWidth > 768){
+    graphSize = (window.innerWidth - 172) * 0.4;
+  }
+
+  // iphone & ipad
+  if(Meteor.isCordova){
+    graphSize = window.innerWidth - 200;
+  }
+
+  let themePrimaryColor = get(Meteor, 'settings.public.theme.palette.primaryColor')
+
+  let paddingWidth = 84;
+  if(Meteor.isCordova){
+    paddingWidth = 20;
+  }
+  if(window.innerWidth > 768){
+    paddingWidth = 104;
+  }
+
+  let cardWidth = window.innerWidth - paddingWidth;
+
+  let columnVisibility = {
+    sampledData: false,
+    codeValue: true
+  }
+
+  if(window.innerWidth > 1600){
+    columnVisibility.sampledData = true;
+  }
+  if(Meteor.isCordova){
+    columnVisibility.codeValue = false;
+  }
+
+
+
+  return (
+    <PageCanvas id='syntheaAnalysisPage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
+      <Grid container style={{marginBottom: '80px'}}>            
+        <Grid item md={6}>
+          <StyledCard margin={20} >
+            <CardHeader 
+              title={this.data.patientsCount + " Patients"}
+              />
+            <CardContent style={{fontSize: '180%'}}>
+              <PatientsTable 
+                patients={Patients.find().fetch()}
+                count={Patients.find().count()}
+                hideIdentifier={true}
+                hideActionIcons={true}
+                hideAddress={true}
+                hideCity={true}
+                hideState={true}
+                hidePostalCode={true}
+                hideCountry={true}
+                hideMaritalStatus={true}
+                hideLanguage={true}
+                hideActive={true}
+                hideSystemBarcode={true}
+                rowsPerPage={5}
+                selectedPatientId={this.data.selectedPatientId}
+                onRowClick={function(id){
+                  Session.set('selectedPatientId', id);
+                  Session.set('selectedPatient', Patients.findOne({id: id}))
+                }}
+              />                      
+            </CardContent>
+          </StyledCard>
+          <DynamicSpacer />
+          <StyledCard margin={20} >
+            <CardHeader 
+              title={this.data.observationsCount + " Observations associated with the selected Patient"}
+              />
+            <CardContent style={{fontSize: '180%'}}>
+              <ObservationsTable 
+                observations={this.data.observations}
+                count={this.data.observationsCount}
+                multiline={true}
+                rowsPerPage={10}
+              />                      
+            </CardContent>
+          </StyledCard>
+
+        </Grid>
+        <Grid item md={6}>
+          <HGraph
+            data={ this.data.currentYearData }
+            score={ this.data.currentScore }
+            width={ graphSize }
+            height={ graphSize }
+            fontSize={ graphSize < 300 ? 10 : 16 }
+            pointRadius={ graphSize < 300 ? 5 : 10 }
+            scoreFontSize={ graphSize < 300 ? 48 : 96 }
+            healthyRangeFillColor={themePrimaryColor}
+            showScore={true}
+            margin={{ top: 72, right: 72, bottom: 72, left: 72 }}
+          />     
+        </Grid>
+      </Grid>          
+    </PageCanvas>
+  );
 }
 
 
-ReactMixin(SyntheaAnalysisPage.prototype, ReactMeteorData);
+// ReactMixin(SyntheaAnalysisPage.prototype, ReactMeteorData);
 
 export default SyntheaAnalysisPage;

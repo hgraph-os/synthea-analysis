@@ -107,6 +107,7 @@
           "/claims",
           "/endpoints",
           "/example-route",
+          "/experimental-analysis",
           "/goals",
           "/hello-world",
           "/imaging-studies",
@@ -225,6 +226,7 @@
   "private": {
     "practitionerAccessCode": "hippocrates",
     "sysadminAccessCode": "rootaccess",
+    "initializeHl7SampleData": true,
     "disableOauth": true,
     "demo": {
       "nightlyDatabaseDrop": true

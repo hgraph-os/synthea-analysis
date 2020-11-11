@@ -1,7 +1,6 @@
 {
   "public": {
-    "title": "hGraph",
-    "secondaryTitle": " on FHIR",
+    "title": "Synthea Surfer",
     "initializeSyntheaData": true,
     "theme": {
       "showVideoBackground": false,
@@ -42,6 +41,13 @@
       "route": "/healthgraph",
       "landingPage": "/healthgraph",
       "homePage": "/healthgraph",
+      "landingModal": {
+        "open": true,
+        "title": "Welcome to Synthea Surfer",
+        "component": "SyntheaAboutDialog",
+        "welcomeMessageText": "Please select the output directory where Synthea put the synthetic data.",
+        "sourceCodeUrl": "/Volumes/FhirCode/Code/GoInvo/synthea/output"
+      },
       "avatars": true,
       "barcodes": true,
       "hexgridMenu": false,
@@ -82,8 +88,8 @@
           "Theme": false,
           "ConstructionZone": false,
           "Navbars": true,
-          "DataImport": true,
-          "DataExport": true,
+          "DataImport": false,
+          "DataExport": false,
           "HealthRecords": false,
           "Login": {
             "availability": "web"
@@ -107,6 +113,8 @@
           "/claims",
           "/endpoints",
           "/example-route",
+          "/experimental-analysis",
+          "/explanation-of-benefits",
           "/goals",
           "/hello-world",
           "/imaging-studies",
@@ -138,7 +146,8 @@
         "/bulk-data-downloader",
         "/bulk-data-launcher",
         "/data-pipelines",
-        "/data-management"
+        "/data-management",
+        "/experimental-analysis"
       ],
       "adminHidden":  [
         "/allergies",
