@@ -1,6 +1,13 @@
+import React from 'react';
 
 import SyntheaAnalysisPage from './client/SyntheaAnalysisPage';
 import ExperimentalPage from './client/ExperimentalPage';
+import SyntheaAboutDialog from './client/SyntheaAboutDialog';
+
+import { 
+  SyntheaAnalysisFooter
+} from './client/SyntheaAnalysisFooter';
+
 
 var DynamicRoutes = [{
   'name': 'SyntheaAnalysisPage',
@@ -17,13 +24,23 @@ var SidebarWorkflows = [{
   'to': '/synthea-analysis',
   'href': '/synthea-analysis',
   'iconName': 'addressBook'
-}, {
-  'primaryText': 'Experimental',
-  'to': '/experimental-analysis',
-  'href': '/experimental-analysis',
-  'iconName': 'addressBook'
 }];
+
+let DialogComponents = [ {
+  name: "SyntheaAboutDialog",
+  component: <SyntheaAboutDialog />
+}]
+
+
+let FooterButtons = [{
+  pathname: '/',
+  component: <SyntheaAnalysisFooter />
+}, {
+  pathname: '/synthea-analysis',
+  component: <SyntheaAnalysisFooter />
+}];
+
 
 let MainPage = SyntheaAnalysisPage;
 
-export { MainPage, SidebarWorkflows, DynamicRoutes, SamplePage, PostcardPage, SyntheaAnalysisPage };
+export { MainPage, FooterButtons, SidebarWorkflows, DynamicRoutes, DialogComponents, SamplePage, PostcardPage, SyntheaAnalysisPage };

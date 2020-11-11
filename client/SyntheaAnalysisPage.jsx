@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ReactMeteorData } from 'meteor/react-meteor-data';
+import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
@@ -645,6 +645,9 @@ export class SyntheaAnalysisPage extends React.Component {
     if(Meteor.isCordova){
       paddingWidth = 20;
     }
+    if(window.innerWidth > 768){
+      paddingWidth = 104;
+    }
 
     let cardWidth = window.innerWidth - paddingWidth;
 
@@ -664,9 +667,9 @@ export class SyntheaAnalysisPage extends React.Component {
 
     return (
       <PageCanvas id='syntheaAnalysisPage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
-        <Grid container style={{marginTop: '40px', marginBottom: '80px'}}>            
+        <Grid container style={{marginBottom: '80px'}}>            
           <Grid item md={6}>
-            <StyledCard margins={20} >
+            <StyledCard margin={20} >
               <CardHeader 
                 title={this.data.patientsCount + " Patients"}
                 />
@@ -695,7 +698,7 @@ export class SyntheaAnalysisPage extends React.Component {
               </CardContent>
             </StyledCard>
             <DynamicSpacer />
-            <StyledCard margins={20} >
+            <StyledCard margin={20} >
               <CardHeader 
                 title={this.data.observationsCount + " Observations associated with the selected Patient"}
                 />

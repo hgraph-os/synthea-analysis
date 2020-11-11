@@ -46,9 +46,29 @@ run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-p
 
 # run with a custom settings file, using the extra package  
 INITIALIZE_SYNTHEA_DATA=true meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages goinvo:synthea-analysis
-
 ```
 
 
+
+#### Compile to desktop app
+
+```bash
+# make sure the electron build pipeline is installed
+meteor npm install --save-dev meteor-desktop
+
+# add licensed packages
+meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages goinvo:synthea-analysis 
+
+# initialize the .desktop directory
+npm run desktop -- init
+
+# move the default config into place
+cp packages/patientinsight:cardiac-scorecard/.desktop/settings.json .desktop/settings.json
+
+# build the executable
+npm run desktop -- build
+npm run desktop -- build-installer
+
+```
 
  

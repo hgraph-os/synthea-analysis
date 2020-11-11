@@ -123,6 +123,7 @@ Package.onUse(function(api) {
     api.addFiles('lib/Collections.js', ['client', 'server']);
     api.addFiles('lib/MedicalRecordImporter.js', ['client', 'server']);
 
+    api.mainModule('server/methods.js', 'server');
     api.mainModule('index.jsx', 'client');
 });
 
