@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.3.0',
+    version: '0.3.2',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
@@ -11,11 +11,11 @@ Package.onUse(function(api) {
     
     api.use('meteor-base@1.4.0');
     api.use('ecmascript@0.13.0');
-    api.use('react-meteor-data@0.2.15');
+    api.use('react-meteor-data@2.1.2');
     api.use('session');
     api.use('mongo');
      
-    api.use('clinical:hl7-fhir-data-infrastructure@6.7.1');
+    api.use('clinical:hl7-fhir-data-infrastructure@6.7.3');
 
     api.addAssets('data/Agustín529_Caldera106_01358a2c-d615-85fe-1665-cbb1b3feeeaa.json', 'client');
     api.addAssets('data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json', 'client');
