@@ -1,7 +1,7 @@
 {
   "public": {
     "title": "Synthea Surfer",
-    "initializeSyntheaData": true,
+    "initializeSyntheaData": false,
     "theme": {
       "showVideoBackground": false,
       "defaultVideo": "/VideoBackgrounds/GrayWaves.mp4",

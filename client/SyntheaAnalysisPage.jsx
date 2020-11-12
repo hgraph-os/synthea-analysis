@@ -1,6 +1,6 @@
 
-// import React from 'react';
-// import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
+import React from 'react';
+import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
@@ -36,7 +36,8 @@ import {
   Conditions,
   Immunizations,
   MedicationStatements,
-  Observations
+  Observations,
+  Patients
 } from 'meteor/clinical:hl7-fhir-data-infrastructure';
 
 import { scaleLinear } from 'd3-scale';
@@ -184,112 +185,33 @@ const hGraphConvert = (gender, metric, data) => {
 
 Session.setDefault('hideToggles', true);
 Session.setDefault('systemOfMeasurement', 'imperial');
-
+Session.setDefault('selectedPatientId', '');
 
 export function SyntheaAnalysisPage(props){
 
 
-  let imgHeight = (Session.get('appHeight') - 210) / 3;
-
     let data = {
-      style: {
-        page: {},
-        coverImg: {
-          maxWidth: 'inherit',
-          maxHeight: 'inherit',
-          height: 'inherit'
-        },
-        cards: {
-          media: {
-            height: (imgHeight - 1) + 'px',
-            overflowY: 'hidden',
-            objectFit: 'cover'
-          },
-          practitioners: {
-            cursor: 'pointescale-downr',
-            height: imgHeight + 'px',
-            overflowY: 'hidden',
-            objectFit: 'cover'
-          },
-          organizations: {
-            cursor: 'pointer',
-            height: imgHeight + 'px',
-            overflowY: 'hidden',
-            objectFit: 'cover'
-          },
-          locations: {
-            cursor: 'pointer',
-            height: imgHeight + 'px',
-            overflowY: 'hidden',
-            objectFit: 'cover'
-          }
-        },
-        inactiveIndexCard: {
-          opacity: .5,
-          width: '100%',
-          display: 'inline-block',
-          paddingLeft: '10px',
-          paddingRight: '10px',
-          paddingBottom: '0px'
-        },
-        tile: {
-          width: '100%',
-          display: 'inline-block',
-          paddingLeft: '10px',
-          paddingRight: '10px',
-          paddingBottom: '0px',
-          marginBottom: '20px',
-          height: imgHeight + 'px'
-        },
-        spacer: {
-          display: 'block'
-        },
-
-      },
-      ccd: {
-        allergyIntolerances: [],
-        careplans: [],
-        conditions: [],
-        diagnosticReports: [],
-        immunizations: [],
-        medications: [],
-        medicationOrders: [],
-        medicationStatements: [],
-        observations: Observations.find().fetch(),
-        patients: [],
-        procedures: []
-      },
-      counts: {
-        observationsCount: Observations.find().count()
-      },
-      minimongo: {
-        allergyIntolerances: [],
-        careplans: [],
-        conditions: [],
-        diagnosticReports: [],
-        immunizations: [],
-        medications: [],
-        medicationOrders: [],
-        medicationStatements: [],
-        observations: [],
-        patients: [],
-        procedures: []
-      },
       query: {},
-      hideEnteredInError: Session.get('hideEnteredInError'),
-      hidePatientName: Session.get('hidePatientName'),
-      hideToggles: Session.get('hideToggles'),
-      hideActionIcons: Session.get('hideActionIcons'),
-      hideIdentifiers: Session.get('hideIdentifiers'),
       currentYearData: [],
       currentScore: 0,
-
-      observations: Observations.find({'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId')}).fetch(),
-      observationsCount: Observations.find({'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId')}).count(),
-      patients: Patients.find().fetch(),
-      patientsCount: Patients.find().count(),
-      selectedPatientId: Session.get('selectedPatientId')  
+      observations: [],
+      patients: [],
+      selectedPatientId: ''
     };
+
+    data.observations = useTracker(function(){
+      return Observations.find({'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId')}).fetch();
+    }, [])
+    data.patients = useTracker(function(){
+      return Patients.find().fetch();
+    }, [])
+    data.selectedPatientId = useTracker(function(){
+      return Session.get('selectedPatientId');
+    }, [])
+
+
+
+
 
     // update sample dataset
     let components;
@@ -477,77 +399,98 @@ export function SyntheaAnalysisPage(props){
 
     console.log('resultingData', resultingData)
 
-    data.currentYearData = this.convertDataSet(resultingData);
+    data.currentYearData = convertDataSet(resultingData);
     console.log('data.currentYearData', data.currentYearData)
 
-    data.currentScore = parseInt(this.calculateHealthScore(this.convertDataSet(resultingData)), 10);
+    data.currentScore = parseInt(calculateHealthScore(convertDataSet(resultingData)), 10);
 
 
-    // data.style.indexCard = Glass.darkroom(data.style.indexCard);
 
-    if (Session.get('appWidth') < 768) {
-      data.style.inactiveIndexCard.width = '100%';
-      data.style.inactiveIndexCard.marginBottom = '10px';
-      data.style.inactiveIndexCard.paddingBottom = '10px';
-      data.style.inactiveIndexCard.paddingLeft = '0px';
-      data.style.inactiveIndexCard.paddingRight = '0px';
+    // if (Session.get('appWidth') < 768) {
+    //   data.style.inactiveIndexCard.width = '100%';
+    //   data.style.inactiveIndexCard.marginBottom = '10px';
+    //   data.style.inactiveIndexCard.paddingBottom = '10px';
+    //   data.style.inactiveIndexCard.paddingLeft = '0px';
+    //   data.style.inactiveIndexCard.paddingRight = '0px';
 
-      data.style.spacer.display = 'none';
-    }
+    //   data.style.spacer.display = 'none';
+    // }
 
-    if(Session.get('appHeight') > 1200){
-      data.style.page = {
-        top: '50%',
-        transform: 'translateY(-50%)',
-        position: 'relative'
-      }
-    }
+    // if(Session.get('appHeight') > 1200){
+    //   data.style.page = {
+    //     top: '50%',
+    //     transform: 'translateY(-50%)',
+    //     position: 'relative'
+    //   }
+    // }
 
     //if(Meteor.user()){
 
 
       
-      if(AllergyIntolerances){
-        data.ccd.allergyIntolerances = AllergyIntolerances.find().fetch();
-      }
-      if(CarePlans){
-        data.ccd.carePlans = CarePlans.find().fetch();
-      }
-      if(Conditions){
-        let conditionsQuery = {};
-        if(data.query){
-          conditionsQuery = data.query;
-        }
-        if(Session.get('hideEnteredInError')){          
-          conditionsQuery.verificationStatus = {$nin: ["entered-in-error"]}  // unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-        }
-        data.ccd.conditions = Conditions.find(conditionsQuery).fetch();
-      }
-      if(DiagnosticReports){
-        data.ccd.diagnosticReports = DiagnosticReports.find(data.query).fetch();
-      }
-      if(Immunizations){
-        data.ccd.immunizations = Immunizations.find().fetch();
-      }
-      if(Medications){
-        data.ccd.medications = Medications.find().fetch();
-      }
-      if(Medications){
-        data.ccd.medicationOrders = MedicationOrders.find().fetch();
-      }        
-      if(MedicationStatements){
-        data.ccd.medicationStatements = MedicationStatements.find().fetch();
-      }
-      if(Patients){
-        data.ccd.patients = Patients.find().fetch();
-      }
-      if(Observations){
-        data.ccd.observations = Observations.find().fetch();
-      }
-      if(Procedures){
-        data.ccd.procedures = Procedures.find(data.query).fetch();
-      }  
-    //}
+    //   if(AllergyIntolerances){
+    //     data.ccd.allergyIntolerances = useTracker(function(){
+    //       return AllergyIntolerances.find().fetch();
+    //     }, [])
+    //   }
+    //   if(CarePlans){
+    //     data.ccd.carePlans = useTracker(function(){
+    //       return CarePlans.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Conditions){
+    //     data.ccd.conditions = useTracker(function(){
+    //       let conditionsQuery = {};
+    //       if(data.query){
+    //         conditionsQuery = data.query;
+    //       }
+    //       if(Session.get('hideEnteredInError')){          
+    //         conditionsQuery.verificationStatus = {$nin: ["entered-in-error"]}  // unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
+    //       }
+    //       return Conditions.find(conditionsQuery).fetch();
+    //     }, [])
+    //   }
+    //   if(DiagnosticReports){
+    //     data.ccd.diagnosticReports = useTracker(function(){
+    //       return DiagnosticReports.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Immunizations){
+    //     data.ccd.immunizations = useTracker(function(){
+    //       return Immunizations.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Medications){
+    //     data.ccd.medications = useTracker(function(){
+    //       return Medications.find().fetch();
+    //     }, [])
+    //   }
+    //   if(MedicationOrders){
+    //     data.ccd.medicationOrders = useTracker(function(){
+    //       return MedicationOrders.find().fetch();
+    //     }, [])
+    //   }        
+    //   if(MedicationStatements){
+    //     data.ccd.medicationStatements = useTracker(function(){
+    //       return MedicationStatements.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Patients){
+    //     data.ccd.patients = useTracker(function(){
+    //       return Patients.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Observations){
+    //     data.ccd.observations = useTracker(function(){
+    //       return Observations.find().fetch();
+    //     }, [])
+    //   }
+    //   if(Procedures){
+    //     data.ccd.procedures = useTracker(function(){
+    //       return Procedures.find().fetch();
+    //     }, [])
+    //   }  
+    // //}
 
     console.log("SyntheaAnalysisPage[data]", data);
 
@@ -589,7 +532,7 @@ export function SyntheaAnalysisPage(props){
     let scoreTotal = 0;
 
     data.map(d => {
-      const score = this.calculateScoreFromMetric(d);
+      const score = calculateScoreFromMetric(d);
       const weightPercentage = d.weight / 100;
       const weightedScore = weightPercentage * score;
       scoreTotal += weightedScore;
@@ -613,17 +556,13 @@ export function SyntheaAnalysisPage(props){
       return converted;
     });
   }
-  function rowClick(){
-    console.log('rowClick')
-  }
-  function openLink(url){
-    console.log("openLink", url);
-    // browserHistory.push(url);
-  }
+
+  
 
 
   let headerHeight = LayoutHelpers.calcHeaderHeight();
   let formFactor = LayoutHelpers.determineFormFactor(2);
+  let paddingWidth = LayoutHelpers.calcCanvasPaddingWidth();
 
   // small web window
   let graphSize = (window.innerWidth - 172) * 0.5;
@@ -640,13 +579,6 @@ export function SyntheaAnalysisPage(props){
 
   let themePrimaryColor = get(Meteor, 'settings.public.theme.palette.primaryColor')
 
-  let paddingWidth = 84;
-  if(Meteor.isCordova){
-    paddingWidth = 20;
-  }
-  if(window.innerWidth > 768){
-    paddingWidth = 104;
-  }
 
   let cardWidth = window.innerWidth - paddingWidth;
 
@@ -670,12 +602,12 @@ export function SyntheaAnalysisPage(props){
         <Grid item md={6}>
           <StyledCard margin={20} >
             <CardHeader 
-              title={this.data.patientsCount + " Patients"}
+              title={data.patients.length + " Patients"}
               />
             <CardContent style={{fontSize: '180%'}}>
               <PatientsTable 
-                patients={Patients.find().fetch()}
-                count={Patients.find().count()}
+                patients={data.patients}
+                count={data.patients.length}
                 hideIdentifier={true}
                 hideActionIcons={true}
                 hideAddress={true}
@@ -688,7 +620,7 @@ export function SyntheaAnalysisPage(props){
                 hideActive={true}
                 hideSystemBarcode={true}
                 rowsPerPage={5}
-                selectedPatientId={this.data.selectedPatientId}
+                selectedPatientId={data.selectedPatientId}
                 onRowClick={function(id){
                   Session.set('selectedPatientId', id);
                   Session.set('selectedPatient', Patients.findOne({id: id}))
@@ -699,12 +631,12 @@ export function SyntheaAnalysisPage(props){
           <DynamicSpacer />
           <StyledCard margin={20} >
             <CardHeader 
-              title={this.data.observationsCount + " Observations associated with the selected Patient"}
+              title={data.observations.length + " Observations"}
               />
             <CardContent style={{fontSize: '180%'}}>
               <ObservationsTable 
-                observations={this.data.observations}
-                count={this.data.observationsCount}
+                observations={data.observations}
+                count={data.observations.length}
                 multiline={true}
                 rowsPerPage={10}
               />                      
@@ -714,8 +646,8 @@ export function SyntheaAnalysisPage(props){
         </Grid>
         <Grid item md={6}>
           <HGraph
-            data={ this.data.currentYearData }
-            score={ this.data.currentScore }
+            data={ data.currentYearData }
+            score={ data.currentScore }
             width={ graphSize }
             height={ graphSize }
             fontSize={ graphSize < 300 ? 10 : 16 }
@@ -731,7 +663,5 @@ export function SyntheaAnalysisPage(props){
   );
 }
 
-
-// ReactMixin(SyntheaAnalysisPage.prototype, ReactMeteorData);
 
 export default SyntheaAnalysisPage;

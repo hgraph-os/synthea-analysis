@@ -57,11 +57,7 @@ INITIALIZE_SYNTHEA_DATA=true meteor run --settings packages/synthea-analysis/con
 meteor npm install --save-dev meteor-desktop
 
 # add licensed packages
-<<<<<<< HEAD
-meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages goinvo:synthea-analysis 
-=======
 meteor run --settings packages/synthea-analysis/configs/settings.synthea.json --extra-packages goinvo:synthea-analysis --mobile-server=127.0.0.1:3000
->>>>>>> a55894d2bc0fda078f0a0562c45ce033c8ac6a46
 
 # initialize the .desktop directory
 npm run desktop -- init
