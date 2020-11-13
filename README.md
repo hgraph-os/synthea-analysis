@@ -52,7 +52,40 @@ INITIALIZE_SYNTHEA_DATA=true meteor run --settings packages/synthea-analysis/con
 
 #### Compile to desktop app
 
+To compile to a desktop app, you will need to begin by editing the `package.json` file, and removing nightwatch, chromedriver, and selenium.  They will interfere with the electron build pipeline.
+
+```json
+{
+  "devDependencies": {
+    "electron": "6.1.7",
+    "electron-builder": "21.2.0",
+    "meteor-desktop": "2.2.5"
+  },
+  "unusedDevLibs": {
+    "babel-eslint": "10.1.0",
+    "chai": "4.2.0",
+    "chai-nightwatch": "0.4.0",
+    "chromedriver": "86.0.0",
+    "eslint": "4.19.1",
+    "eslint-import-resolver-meteor": "0.4.0",
+    "eslint-plugin-import": "2.21.2",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-meteor": "7.0.0",
+    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react-hooks": "4.0.4",
+    "nightwatch": "1.5.0",
+    "selenium-webdriver": "3.6.0"
+  }
+}
+```
+
+Then run the following commands from the terminal:
+
 ```bash
+# make sure the electron build pipeline is installed
+meteor add omega:meteor-desktop-watcher@=2.2.5
+meteor add omega:meteor-desktop-bundler@=2.2.5
+
 # make sure the electron build pipeline is installed
 meteor npm install --save-dev meteor-desktop
 
@@ -69,6 +102,35 @@ cp packages/patientinsight:cardiac-scorecard/.desktop/settings.json .desktop/set
 npm run desktop -- build
 npm run desktop -- build-installer
 
+# make sure the electron build pipeline is installed
+meteor remove omega:meteor-desktop-watcher@=2.2.5
+meteor remove omega:meteor-desktop-bundler@=2.2.5
+
 ```
 
- 
+When finished, and checking the branch back into GitHub, be sure to remove the electron packages, and re-enable nightwatch and selenium.  
+
+```json
+{
+  "devDependencies": {
+    "babel-eslint": "10.1.0",
+    "chai": "4.2.0",
+    "chai-nightwatch": "0.4.0",
+    "chromedriver": "86.0.0",
+    "eslint": "4.19.1",
+    "eslint-import-resolver-meteor": "0.4.0",
+    "eslint-plugin-import": "2.21.2",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-meteor": "7.0.0",
+    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react-hooks": "4.0.4",
+    "nightwatch": "1.5.0",
+    "selenium-webdriver": "3.6.0"
+  },
+  "unusedDevLibs": {
+    "electron": "6.1.7",
+    "electron-builder": "21.2.0",
+    "meteor-desktop": "2.2.5"
+  }
+}
+```
