@@ -631,11 +631,7 @@ export function SyntheaAnalysisPage(props){
           <DynamicSpacer />
           <StyledCard margin={20} >
             <CardHeader 
-<<<<<<< HEAD
               title={data.observations.length + " Observations"}
-=======
-              title={data.observations.length + " Observations associated with the selected Patient"}
->>>>>>> 62bfd73dc0bacc62350cb7a763b9cfa36a40c6cd
               />
             <CardContent style={{fontSize: '180%'}}>
               <ObservationsTable 
