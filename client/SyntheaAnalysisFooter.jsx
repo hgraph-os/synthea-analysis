@@ -103,14 +103,23 @@ export function SyntheaAnalysisFooter(props){
     }
   }
 
+  let scanDirectoryBtn;
+  if(get(Meteor, 'settings.public.synthea.showScanDirectoryButton')){
+    scanDirectoryBtn = <Button onClick={ scanDirectory.bind(this) } className={ buttonClasses.west_button }>
+      Scan Synthea Directory
+    </Button>
+  }
+  let clearDatabaseBtn;
+  if(get(Meteor, 'settings.public.synthea.showScanDirectoryButton')){
+    scanDirectoryBtn = <Button onClick={ dropEverything.bind(this) } className={ buttonClasses.west_button }>
+      Clear Database
+    </Button>
+  }
+
   return (
     <MuiThemeProvider theme={muiTheme} >
-      <Button onClick={ scanDirectory.bind(this) } className={ buttonClasses.west_button }>
-        Scan Synthea Directory
-      </Button>      
-      <Button onClick={ dropEverything.bind(this) } className={ buttonClasses.west_button }>
-        Clear Database
-      </Button>  
+      { scanDirectoryBtn }
+      { clearDatabaseBtn }
     </MuiThemeProvider>
   );
 }

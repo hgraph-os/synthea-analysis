@@ -1,7 +1,11 @@
 {
   "public": {
     "title": "Synthea Surfer",
-    "initializeSyntheaData": false,
+    "synthea": {
+      "autoInitialize": true,
+      "numPatientsToInitialize": 20,
+      "showScanDirectoryButton": true
+    },
     "theme": {
       "showVideoBackground": false,
       "defaultVideo": "/VideoBackgrounds/GrayWaves.mp4",

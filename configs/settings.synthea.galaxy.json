@@ -1,6 +1,11 @@
 {
   "public": {
     "title": "Synthea Surfer",
+    "synthea": {
+      "autoInitialize": true,
+      "numPatientsToInitialize": 20,
+      "showScanDirectoryButton": false
+    },
     "initializeSyntheaData": true,
     "plugins": {
       "syntheaAnalysis": {

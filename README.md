@@ -134,3 +134,17 @@ When finished, and checking the branch back into GitHub, be sure to remove the e
   }
 }
 ```
+
+
+#### Settings File
+You will want to add the following keys to your `Meteor.settings` file or `METEOR_SETTINGS` environment variable.  
+```
+"public"{
+    "synthea": {
+      "autoInitialize": true,
+      "numPatientsToInitialize": 20,
+      "showScanDirectoryButton": false
+    }
+}
+```  
+
