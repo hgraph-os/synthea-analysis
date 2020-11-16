@@ -91,8 +91,8 @@
           "Theme": false,
           "ConstructionZone": false,
           "Navbars": true,
-          "DataImport": true,
-          "DataExport": true,
+          "DataImport": false,
+          "DataExport": false,
           "HealthRecords": false,
           "Login": {
             "availability": "web"
@@ -214,6 +214,16 @@
     "disableOauth": true,
     "demo": {
       "nightlyDatabaseDrop": true
+    }
+  },
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb+srv://healthadmin:kJgZgHtYcRVzeMqw@syntheasurfer.2lfxc.mongodb.net/meteor?retryWrites=true&w=majority",
+      "MONGO_OPLOG_URL": "mongodb+srv://oplog:5JaNFyMFWTwaUSYf@syntheasurfer.2lfxc.mongodb.net/local?retryWrites=true&w=majority&authSource=admin&ssl=true&replicaSet=atlas-lf0udr-shard-0",
+      "NODE_ENV": "prod",
+      "ROOT_URL": "https://synthea-surfer.meteorapp.com",
+      "DEBUG": 1,
+      "TRACE": 0
     }
   }
 }

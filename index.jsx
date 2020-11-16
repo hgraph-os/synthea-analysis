@@ -1,12 +1,15 @@
 import React from 'react';
 
 import SyntheaAnalysisPage from './client/SyntheaAnalysisPage';
-import ExperimentalPage from './client/ExperimentalPage';
 import SyntheaAboutDialog from './client/SyntheaAboutDialog';
+import hGraphDemoPage from './client/hGraphDemoPage';
 
-import { 
-  SyntheaAnalysisFooter
-} from './client/SyntheaAnalysisFooter';
+
+
+
+// import { 
+//   SyntheaAnalysisFooter
+// } from './client/SyntheaAnalysisFooter';
 
 
 var DynamicRoutes = [{
@@ -14,12 +17,17 @@ var DynamicRoutes = [{
   'path': '/synthea-analysis',
   'component': SyntheaAnalysisPage
 }, {
-  'name': 'ExperimentalPage',
-  'path': '/experimental-analysis',
-  'component': ExperimentalPage
+  'name': 'hGraphDemoPage',
+  'path': '/hgraph-demo',
+  'component': hGraphDemoPage
 }];
 
 var SidebarWorkflows = [{
+  'primaryText': 'hGraph Demo',
+  'to': '/hgraph-demo',
+  'href': '/hgraph-demo',
+  'iconName': 'healthgraph'
+}, {
   'primaryText': 'Synthea Analysis',
   'to': '/synthea-analysis',
   'href': '/synthea-analysis',
@@ -32,15 +40,15 @@ let DialogComponents = [ {
 }]
 
 
-let FooterButtons = [{
-  pathname: '/',
-  component: <SyntheaAnalysisFooter />
-}, {
-  pathname: '/synthea-analysis',
-  component: <SyntheaAnalysisFooter />
-}];
+// let FooterButtons = [{
+//   pathname: '/',
+//   component: <SyntheaAnalysisFooter />
+// }, {
+//   pathname: '/synthea-analysis',
+//   component: <SyntheaAnalysisFooter />
+// }];
 
 
 let MainPage = SyntheaAnalysisPage;
 
-export { MainPage, FooterButtons, SidebarWorkflows, DynamicRoutes, DialogComponents, SamplePage, PostcardPage, SyntheaAnalysisPage };
+export { MainPage, SidebarWorkflows, DynamicRoutes, DialogComponents, hGraphDemoPage, SyntheaAnalysisPage };

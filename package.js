@@ -123,7 +123,6 @@ Package.onUse(function(api) {
     api.addFiles('lib/Collections.js', ['client', 'server']);
     api.addFiles('lib/MedicalRecordImporter.js', ['client', 'server']);
 
-    api.mainModule('server/methods.js', 'server');
     api.mainModule('index.jsx', 'client');
 });
 
@@ -133,8 +132,6 @@ Npm.depends({
     // "@nivo/radar": "0.61.1",
     // "@nivo/pie": "0.61.1",
 
-    // "hgraph-react": "0.0.7",
-
-    "read-directory": "3.0.2",
+    "hgraph-react": "0.0.7",
     "d3-scale": "3.0.1"    
 })
