@@ -218,8 +218,8 @@
   },
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": "mongodb+srv://healthadmin:kJgZgHtYcRVzeMqw@syntheasurfer.2lfxc.mongodb.net/meteor?retryWrites=true&w=majority",
-      "MONGO_OPLOG_URL": "mongodb+srv://oplog:5JaNFyMFWTwaUSYf@syntheasurfer.2lfxc.mongodb.net/local?retryWrites=true&w=majority&authSource=admin&ssl=true&replicaSet=atlas-lf0udr-shard-0",
+      "MONGO_URL": "mongodb+srv://healthadmin:1234567890@syntheasurfer.2lfxc.mongodb.net/meteor?retryWrites=true&w=majority",
+      "MONGO_OPLOG_URL": "mongodb+srv://oplog:1234567890@syntheasurfer.2lfxc.mongodb.net/local?retryWrites=true&w=majority&authSource=admin&ssl=true&replicaSet=atlas-lf0udr-shard-0",
       "NODE_ENV": "prod",
       "ROOT_URL": "https://synthea-surfer.meteorapp.com",
       "DEBUG": 1,
