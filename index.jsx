@@ -3,8 +3,7 @@ import React from 'react';
 import SyntheaAnalysisPage from './client/SyntheaAnalysisPage';
 import SyntheaAboutDialog from './client/SyntheaAboutDialog';
 import hGraphDemoPage from './client/hGraphDemoPage';
-
-
+import hGraphCollectionSummary from './client/hGraphCollectionSummary';
 
 
 // import { 
@@ -20,9 +19,18 @@ var DynamicRoutes = [{
   'name': 'hGraphDemoPage',
   'path': '/hgraph-demo',
   'component': hGraphDemoPage
+}, {
+  'name': 'hGraphCollectionSummary',
+  'path': '/patient-summary',
+  'component': hGraphCollectionSummary
 }];
 
 var SidebarWorkflows = [{
+  'primaryText': 'Patient Summary',
+  'to': '/patient-summary',
+  'href': '/patient-summary',
+  'iconName': 'healthgraph'
+}, {
   'primaryText': 'hGraph Demo',
   'to': '/hgraph-demo',
   'href': '/hgraph-demo',
@@ -49,6 +57,6 @@ let DialogComponents = [ {
 // }];
 
 
-let MainPage = SyntheaAnalysisPage;
+let MainPage = hGraphCollectionSummary;
 
 export { MainPage, SidebarWorkflows, DynamicRoutes, DialogComponents, hGraphDemoPage, SyntheaAnalysisPage };

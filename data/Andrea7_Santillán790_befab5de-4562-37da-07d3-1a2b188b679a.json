@@ -142,6 +142,11 @@
         ],
         "gender": "female",
         "birthDate": "2002-12-15",
+        "photo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Amelia-in-evening-clothes_%28cropped%29.jpg/220px-Amelia-in-evening-clothes_%28cropped%29.jpg"
+          }
+        ],
         "address": [
           {
             "extension": [

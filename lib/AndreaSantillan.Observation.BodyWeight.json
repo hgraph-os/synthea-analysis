@@ -1,0 +1,44 @@
+{
+    "_id" : "cDorXDxLqbHb334Cs",
+    "resourceType" : "Observation",
+    "id" : "18a23226-0049-7873-f63b-2fb5af7276bc",
+    "meta" : {
+        "profile" : [ 
+            "http://hl7.org/fhir/StructureDefinition/bodyweight", 
+            "http://hl7.org/fhir/StructureDefinition/vitalsigns"
+        ]
+    },
+    "status" : "final",
+    "category" : [ 
+        {
+            "coding" : [ 
+                {
+                    "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code" : "vital-signs",
+                    "display" : "vital-signs"
+                }
+            ]
+        }
+    ],
+    "code" : {
+        "coding" : [ 
+            {
+                "system" : "http://loinc.org",
+                "code" : "29463-7",
+                "display" : "Body Weight"
+            }
+        ],
+        "text" : "Body Weight"
+    },
+    "subject" : {
+        "reference" : "urn:uuid:befab5de-4562-37da-07d3-1a2b188b679a"
+    },
+    "effectiveDateTime" : "2020-02-28T14:38:07.000Z",
+    "issued" : "2020-02-28T14:38:07.881Z",
+    "valueQuantity" : {
+        "value" : 49.8,
+        "unit" : "kg",
+        "system" : "http://unitsofmeasure.org",
+        "code" : "kg"
+    }
+}

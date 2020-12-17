@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
-import ReactMixin from 'react-mixin';
+import { useTracker } from '@ledgy/react-meteor-data';
 import { browserHistory } from 'react-router';
 
 import { get, has } from 'lodash';

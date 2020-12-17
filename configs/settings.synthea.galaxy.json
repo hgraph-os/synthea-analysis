@@ -1,6 +1,6 @@
 {
   "public": {
-    "title": "Synthea Surfer",
+    "title": "hGraph Clinician View Demo",
     "synthea": {
       "autoInitialize": true,
       "numPatientsToInitialize": 20,
@@ -29,7 +29,7 @@
         "errorColor": "rgb(128,20,60) !important",
         "errorText": "#ffffff !important",
       
-        "appBarColor": "rgb(108, 183, 110) !important",
+        "appBarColor": "#262626 !important",
         "appBarTextColor": "#ffffff !important",
       
         "paperColor": "#ffffff !important",
@@ -58,10 +58,10 @@
       "showPatientNameInHeader": true,
       "notificationMenu": false,
       "searchbarVisible": true,
-      "prominantHeader": true,
+      "prominantHeader": false,
       "displayNavbars": true,
       "disableHeader": false,
-      "disableFooter": false,
+      "disableFooter": true,
       "paginationLimit": 100,
       "subscriptionLimit": 1000,
       "cards": {

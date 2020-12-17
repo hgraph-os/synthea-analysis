@@ -123,14 +123,18 @@ Package.onUse(function(api) {
     api.addFiles('lib/Collections.js', ['client', 'server']);
     api.addFiles('lib/MedicalRecordImporter.js', ['client', 'server']);
 
+    if(Package['symptomatic:data-management']){
+        api.use('symptomatic:data-management');
+    }
+
     api.mainModule('index.jsx', 'client');
 });
 
 
 Npm.depends({    
-    // "@nivo/core": "0.61.0",
-    // "@nivo/radar": "0.61.1",
+    // "@nivo/radar": "0.66.0",
     // "@nivo/pie": "0.61.1",
+    
 
     "hgraph-react": "0.0.7",
     "d3-scale": "3.0.1"    
