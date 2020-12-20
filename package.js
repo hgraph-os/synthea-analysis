@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.3.2',
+    version: '0.4.0',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
@@ -15,7 +15,7 @@ Package.onUse(function(api) {
     api.use('session');
     api.use('mongo');
      
-    api.use('clinical:hl7-fhir-data-infrastructure@6.7.3');
+    api.use('clinical:hl7-fhir-data-infrastructure');
 
     api.addAssets('data/Agustín529_Caldera106_01358a2c-d615-85fe-1665-cbb1b3feeeaa.json', 'client');
     api.addAssets('data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json', 'client');

@@ -4,6 +4,7 @@ import SyntheaAnalysisPage from './client/SyntheaAnalysisPage';
 import SyntheaAboutDialog from './client/SyntheaAboutDialog';
 import hGraphDemoPage from './client/hGraphDemoPage';
 import hGraphCollectionSummary from './client/hGraphCollectionSummary';
+import PatientCollectionSummary from './client/PatientCollectionSummary';
 
 
 // import { 
@@ -20,9 +21,9 @@ var DynamicRoutes = [{
   'path': '/hgraph-demo',
   'component': hGraphDemoPage
 }, {
-  'name': 'hGraphCollectionSummary',
+  'name': 'PatientCollectionSummary',
   'path': '/patient-summary',
-  'component': hGraphCollectionSummary
+  'component': PatientCollectionSummary
 }];
 
 var SidebarWorkflows = [{
@@ -57,6 +58,6 @@ let DialogComponents = [ {
 // }];
 
 
-let MainPage = hGraphCollectionSummary;
+let MainPage = PatientCollectionSummary;
 
 export { MainPage, SidebarWorkflows, DynamicRoutes, DialogComponents, hGraphDemoPage, SyntheaAnalysisPage };

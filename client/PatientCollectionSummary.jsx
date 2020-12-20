@@ -37,7 +37,8 @@ import {
   Immunizations,
   MedicationStatements,
   Observations,
-  Patients
+  Patients,
+  FhirUtilities
 } from 'meteor/clinical:hl7-fhir-data-infrastructure';
 
 import { scaleLinear } from 'd3-scale';
@@ -50,7 +51,7 @@ let collectionBuckets = [
     "healthyMin": 0,
     "healthyMax": 10,
     "absoluteMin": 0,
-    "absoluteMax": 100,
+    "absoluteMax": 1000,
     "value": 0,
     "weight": 10,
     "unitLabel": "records"
@@ -61,7 +62,7 @@ let collectionBuckets = [
     "healthyMin": 0,
     "healthyMax": 20,
     "absoluteMin": 0,
-    "absoluteMax": 200,
+    "absoluteMax": 1000,
     "value": 0,
     "weight": 10,
     "unitLabel": "records"
@@ -94,7 +95,7 @@ let collectionBuckets = [
     "healthyMin": 0,
     "healthyMax": 25,
     "absoluteMin": 0,
-    "absoluteMax": 200,
+    "absoluteMax": 1000,
     "value": 0,
     "weight": 10,
     "unitLabel": "records"
@@ -125,9 +126,9 @@ let collectionBuckets = [
     "id": "observationCount",
     "label": "Observations",
     "healthyMin": 0,
-    "healthyMax": 10000,
+    "healthyMax": 1000,
     "absoluteMin": 0,
-    "absoluteMax": 1000000,
+    "absoluteMax": 1000,
     "value": 0,
     "weight": 10,
     "unitLabel": "records"
@@ -138,7 +139,7 @@ let collectionBuckets = [
     "healthyMin": 0,
     "healthyMax": 2,
     "absoluteMin": 0,
-    "absoluteMax": 100,
+    "absoluteMax": 1000,
     "value": 0,
     "weight": 10,
     "unitLabel": "records"
@@ -216,46 +217,11 @@ let radarData = [
 
 
 
-import AndreaSantillanBodyWeight from '../lib/AndreaSantillan.Observation.BodyWeight.json';
-import AndreaSantillanBloodPressure from '../lib/AndreaSantillan.Observation.BloodPressure.json';
-import AndreaSantillanHeartRate from '../lib/AndreaSantillan.Observation.HeartRate.json';
-import AndreaSantillanOralTemperature from '../lib/AndreaSantillan.Observation.OralTemperature.json';
-import AndreaSantillanOxygenSaturation from '../lib/AndreaSantillan.Observation.OxygenSaturation.json';
-
-import Andrea7_Santillán790_befab5de from '../data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json';
-import Ann985_Medhurst46_c7f40e00 from '../data/Ann985_Medhurst46_c7f40e00-f81b-a1cc-8940-9bb3ea4cb235.json';
-import Billye739_Rau926_06d367b1 from '../data/Billye739_Rau926_06d367b1-bf0b-3bf9-dff7-8bebaf29236b.json';
-
-let AndreaSantillán;
-let AnnMedhurst;
-let BillyeRau;
-
-let andreaObservations = [];
-
 Meteor.startup(function(){
-
-  console.log('Andrea7_Santillán790_befab5de', Andrea7_Santillán790_befab5de)
-  console.log('Ann985_Medhurst46_c7f40e00', Ann985_Medhurst46_c7f40e00)
-  console.log('Billye739_Rau926_06d367b1', Billye739_Rau926_06d367b1)
-
-  if(Array.isArray(Andrea7_Santillán790_befab5de.entry)){
-    Andrea7_Santillán790_befab5de.entry.forEach(function(entry){
-      if(get(entry, 'resource.resourceType') === "Patient"){
-        AndreaSantillán = entry.resource;
-      }
-      if(get(entry, 'resource.resourceType') === "Observation"){
-        andreaObservations.push(entry.resource);
-      }
-    })
-  }
-
-  console.log('AndreaSantillán', AndreaSantillán)
-
   Session.setDefault('hideToggles', true);
   Session.setDefault('systemOfMeasurement', 'imperial');
-  Session.setDefault('selectedPatientId', AndreaSantillán.id);
-  Session.setDefault('selectedPatient', AndreaSantillán) 
-
+  // Session.setDefault('selectedPatientId', AndreaSantillán.id);
+  // Session.setDefault('selectedPatient', AndreaSantillán) 
 })
 
 
@@ -339,6 +305,8 @@ function generateCollectionCounts(data){
     }
   })
 
+  console.log('PatientCollectionSummary.resultsArray', resultsArray)
+
   return resultsArray;
 }
 
@@ -349,10 +317,10 @@ function generateCollectionCounts(data){
 
 
 
-export function hGraphCollectionSummary(props){
+export function PatientCollectionSummary(props){
 
   let firstPatientName = "";
-  let firstPatientId = get(AndreaSantillán, 'id');
+  let firstPatientId = "";
 
   let secondPatientName = "";
   let secondPatientId = "";
@@ -375,63 +343,64 @@ export function hGraphCollectionSummary(props){
     observations: [],
     patients: [],
     procedures: [],
-    selectedPatientId: ''
+    selectedPatientId: '',
+    selectedPatient: null
   };
 
+  data.selectedPatient = useTracker(function(){    
+    return Patients.findOne({id: Session.get('selectedPatientId')})
+  }, []);
+  data.selectedPatientId = useTracker(function(){
+    return Session.get('selectedPatientId');
+  }, []);
 
 
   data.allergyIntolerances = useTracker(function(){
     return AllergyIntolerances.find().fetch();
-  }, [])
+  }, []);
   data.conditions = useTracker(function(){
     return Conditions.find().fetch();
-  }, [])
+  }, []);
   data.diagnosticReports = useTracker(function(){
     return DiagnosticReports.find().fetch();
-  }, [])
+  }, []);
   data.encounters = useTracker(function(){
     return Encounters.find().fetch();
-  }, [])
+  }, []);
   data.immunizations = useTracker(function(){
     return Immunizations.find().fetch();
-  }, [])
+  }, []);
   data.medications = useTracker(function(){
     return Medications.find().fetch();
-  }, [])
+  }, []);
   data.medicationStatements = useTracker(function(){
     return MedicationStatements.find().fetch();
-  }, [])
+  }, []);
   data.observations = useTracker(function(){
     // return Observations.find({'subject.reference': 'urn:uuid:' + Session.get('selectedPatientId')}).fetch();
     return Observations.find().fetch();
-  }, [props.lastUpdated])
+  }, []);
   data.patients = useTracker(function(){
     return Patients.find().fetch();
-  }, [])
+  }, []);
   data.procedures = useTracker(function(){
     return Procedures.find().fetch();
-  }, [])
+  }, []);
   
 
 
-
-
-  data.selectedPatientId = useTracker(function(){
-    return Session.get('selectedPatientId');
-  }, [])
-
-  if(AndreaSantillán){
-    firstPatientName = get(AndreaSantillán, 'name.0.given.0') + ' ' + get(AndreaSantillán, 'name.0.family');;
-    firstPatientId = get(AndreaSantillán, 'id');
-  }
-  if(AnnMedhurst){
-    secondPatientName = get(AnnMedhurst, 'name.0.given.0') + ' ' + get(AnnMedhurst, 'name.0.family');;
-    secondPatientId = get(AnnMedhurst, 'id');
-  }
-  if(BillyeRau){
-    thirdPatientName = get(BillyeRau, 'name.0.given.0') + ' ' + get(BillyeRau, 'name.0.family');;
-    thirdPatientId = get(BillyeRau, 'id');
-  }
+  // if(AndreaSantillán){
+  //   firstPatientName = get(AndreaSantillán, 'name.0.given.0') + ' ' + get(AndreaSantillán, 'name.0.family');;
+  //   firstPatientId = get(AndreaSantillán, 'id');
+  // }
+  // if(AnnMedhurst){
+  //   secondPatientName = get(AnnMedhurst, 'name.0.given.0') + ' ' + get(AnnMedhurst, 'name.0.family');;
+  //   secondPatientId = get(AnnMedhurst, 'id');
+  // }
+  // if(BillyeRau){
+  //   thirdPatientName = get(BillyeRau, 'name.0.given.0') + ' ' + get(BillyeRau, 'name.0.family');;
+  //   thirdPatientId = get(BillyeRau, 'id');
+  // }
 
 
 
@@ -440,13 +409,13 @@ export function hGraphCollectionSummary(props){
   resultingData = generateCollectionCounts(data);
 
 
-  console.log('resultingData', resultingData)
+  //console.log('resultingData', resultingData)
 
   data.currentData = resultingData;
-  console.log('data.currentData', data.currentData)
+  // console.log('data.currentData', data.currentData)
 
 
-  console.log("hGraphCollectionSummary[data]", data);  
+  console.log("PatientCollectionSummary[data]", data);  
 
 
   let headerHeight = LayoutHelpers.calcHeaderHeight();
@@ -506,47 +475,75 @@ export function hGraphCollectionSummary(props){
   }
 
 
+  let selectedPatientElements;
   let collectionManagementElements;
+  let pageContextTitle = "Data Currently Loaded in Client"
+  let pageContextSubheader = ""
+
+  let cardHeight;
+  let selectedPatientElementStyle = {
+    fontSize: '180%', 
+    cursor: 'pointer'
+  };
+
+  
   if(Package['symptomatic:data-management']){
     import { CollectionManagement } from 'meteor/symptomatic:data-management';
 
-    collectionManagementElements = <StyledCard margin={20} >
-      <CollectionManagement 
-        mode="additive"
-        // resourceTypes={["AllergyIntolerance", "Bundle", "CarePlan", "Claim", "Condition", "Device", "DiagnosticReport", "Encounter", "ExplanationOfBenefit", "FamilyMemberHistory", "Goal", "Immunization", "Medication", "MedicationOrder", "MedicationStatement", "Observation", "Person", "Procedure", "Practitioners", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "Sequences"]}
-        displayExportCheckmarks={false}
-        displayExportButton={false}
-        displayIcons={true}
-        displayPreview={false}
-        displayImportCheckmarks={false}
-        selectedPatientId={firstPatientId}
-        tableSize="medium"
-        displayIcons={true}
-      />
-    </StyledCard>    
+    if(data.selectedPatientId){
+      pageContextSubheader = data.selectedPatientId;
+      pageContextTitle = FhirUtilities.assembleName(Patients.findOne({id: data.selectedPatientId}))
+      
+      selectedPatientElements = <div style={selectedPatientElementStyle} onClick={handleFirstCardClick.bind(this)}>
+        <DynamicSpacer />
+        <h4 className="barcode barcodes" style={{fontWeight: 200, margin: '0px', padding: '0px', fontSize: '60%'}}>{data.selectedPatientId}</h4>                        
+        {/* <StyledCard margin={20} >
+          <CardHeader 
+            title={pageContextTitle} 
+            style={{marginBottom: '0px', paddingBottom: '10px'}}
+          />                             
+        </StyledCard> */}
+        <DynamicSpacer />
+        <PatientCard 
+          showName={false}
+          patient={data.selectedPatient}
+        />                                                        
+      </div>
+    } else {
+      cardHeight = "auto"
+    }
+
+    collectionManagementElements = <div>
+      <StyledCard margin={20} height={cardHeight}>
+        <CardHeader 
+          title={pageContextTitle}
+          subheader={pageContextSubheader}
+          style={{marginBottom: '0px', paddingBottom: '10px'}}
+        /> 
+        <DynamicSpacer />
+        <CollectionManagement 
+          mode="additive"
+          // resourceTypes={["AllergyIntolerance", "Bundle", "CarePlan", "Claim", "Condition", "Device", "DiagnosticReport", "Encounter", "ExplanationOfBenefit", "FamilyMemberHistory", "Goal", "Immunization", "Medication", "MedicationOrder", "MedicationStatement", "Observation", "Person", "Procedure", "Practitioners", "Questionnaire", "QuestionnaireResponse", "RelatedPerson", "Sequences"]}
+          displayExportCheckmarks={false}
+          displayExportButton={false}
+          displayIcons={true}
+          displayPreview={false}
+          displayImportCheckmarks={false}
+          selectedPatientId={firstPatientId}
+          tableSize="medium"
+          displayIcons={true}
+        />
+      </StyledCard>    
+    </div>
   }
 
+
   return (
-    <PageCanvas id='hGraphCollectionSummary' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >       
+    <PageCanvas id='PatientCollectionSummary' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >       
       <Grid container >      
         <Grid item lg={4}>
-          <CardContent style={{fontSize: '180%', cursor: 'pointer'}} onClick={handleFirstCardClick.bind(this)}>
-            <StyledCard margin={20} >
-              <p className="barcode barcodes" style={{fontWeight: 200, margin: '0px', padding: '0px', fontSize: '60%'}}>{firstPatientId}</p>                        
-              <CardHeader 
-                title={firstPatientName} 
-                // subheader={firstPatientId}
-                style={{marginBottom: '0px', paddingBottom: '10px'}}
-              />                             
-            </StyledCard>
-            <DynamicSpacer />
-            <PatientCard 
-              showName={false}
-              patient={AndreaSantillán}
-            />
-
-            { collectionManagementElements }                                                   
-          </CardContent>
+          { selectedPatientElements }
+          { collectionManagementElements }   
         </Grid>
         <Grid item lg={8} style={{textAlign: 'center'}} >
 
@@ -570,4 +567,4 @@ export function hGraphCollectionSummary(props){
 }
 
 
-export default hGraphCollectionSummary;
+export default PatientCollectionSummary;
