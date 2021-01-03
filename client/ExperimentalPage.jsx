@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import { ResponsivePie } from '@nivo/pie'
 
 import HGraph from 'hgraph-react'; 
-import { StyledCard, PageCanvas } from 'material-fhir-ui';
+import { StyledCard, PageCanvas } from 'fhir-starter';
 
 
 

@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.4.0',
+    version: '0.5.0',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
@@ -132,10 +132,6 @@ Package.onUse(function(api) {
 
 
 Npm.depends({    
-    // "@nivo/radar": "0.66.0",
-    // "@nivo/pie": "0.61.1",
-    
-
     "hgraph-react": "0.0.7",
     "d3-scale": "3.0.1"    
 })

@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Container';
 
 
 import HGraph from 'hgraph-react'; // symlinked with 'yarn link' from project root.
-import { StyledCard, PageCanvas, PatientCard, PatientsTable } from 'material-fhir-ui';
+import { StyledCard, PageCanvas, PatientCard, PatientsTable } from 'fhir-starter';
 
 import { 
   AllergyIntolerancesTable, 
