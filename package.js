@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.3.3',
+    version: '0.5.0',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
@@ -20,7 +20,7 @@ Package.onUse(function(api) {
     api.use('session');
     api.use('mongo');
      
-    api.use('clinical:hl7-fhir-data-infrastructure@6.10.1');
+    api.use('clinical:hl7-fhir-data-infrastructure');
 
     api.addAssets('data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json', 'client');
     api.addAssets('data/Ann985_Medhurst46_c7f40e00-f81b-a1cc-8940-9bb3ea4cb235.json', 'client');
@@ -134,10 +134,6 @@ Package.onUse(function(api) {
 
 
 Npm.depends({    
-    // "@nivo/radar": "0.66.0",
-    // "@nivo/pie": "0.61.1",
-    
-
     "hgraph-react": "0.0.7",
     "d3-scale": "3.0.1"    
 })
