@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.5.0',
+    version: '0.5.1',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
