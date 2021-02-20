@@ -25,7 +25,7 @@ import moment from 'moment';
 import {github} from 'react-icons-kit/icomoon/github'
 import { Icon } from 'react-icons-kit'
 
-import { PageCanvas, StyledCard, PatientTable } from 'material-fhir-ui';
+import { PageCanvas, StyledCard, PatientTable } from 'fhir-starter';
 import { useTracker } from 'meteor/clinical:hl7-fhir-data-infrastructure';
 
 let appVersion = get(Meteor, 'settings.public.appVersion', 'v0.0.0')
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   githubIcon: {
     margin: '0px'
   }
-}));
+}, {index: 1}));
 
 //==============================================================================================
 // MAIN COMPONENT

@@ -17,7 +17,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Container';
 
 import HGraph from 'hgraph-react'; // symlinked with 'yarn link' from project root.
-import { StyledCard, PageCanvas, PatientsTable } from 'material-fhir-ui';
+import { StyledCard, PageCanvas, PatientsTable } from 'fhir-starter';
 
 import { 
   AllergyIntolerancesTable, 
@@ -65,7 +65,7 @@ let sampleData = [
     "metric": "bloodPressureSystolic",
     "label": "Systolic blood pressure",
     "healthMin": 100,
-    "healthMax": 140,
+    "healthyMax": 140,
     "absoluteMin": 80,
     "absoluteMax": 200,
     "value": 120
@@ -74,7 +74,7 @@ let sampleData = [
     "metric": "bloodPressureDiastolic",
     "label": "Diastolic blood pressure",
     "healthMin": 60,
-    "healthMax": 100,
+    "healthyMax": 100,
     "absoluteMin": 0,
     "absoluteMax": 200,
     "value": 80
@@ -83,7 +83,7 @@ let sampleData = [
     "metric": "weight",
     "label": "Body weight Measured",
     "healthMin": 120,
-    "healthMax": 200,
+    "healthyMax": 200,
     "absoluteMin": 80,
     "absoluteMax": 240,
     "value": 140
@@ -92,7 +92,7 @@ let sampleData = [
     "metric": "pulse",
     "label": "Heart rate",
     "healthMin": 50,
-    "healthMax": 80,
+    "healthyMax": 80,
     "absoluteMin": 30,
     "absoluteMax": 120,
     "value": 60
@@ -101,7 +101,7 @@ let sampleData = [
     "metric": "bloodOxygenation",
     "label": "Oxygen saturation in Blood",
     "healthMin": 90,
-    "healthMax": 100,
+    "healthyMax": 100,
     "absoluteMin": 70,
     "absoluteMax": 100,
     "value": 98
@@ -110,7 +110,7 @@ let sampleData = [
     "metric": "temperature",
     "label": "Body temperature (F)",
     "healthMin": 96,
-    "healthMax": 99,
+    "healthyMax": 99,
     "absoluteMin": 90,
     "absoluteMax": 108,
     "value": 98.6
@@ -119,7 +119,7 @@ let sampleData = [
     "metric": "temperatureCelcius",
     "label": "Body temperature (C)",
     "healthMin": 36,
-    "healthMax": 38,
+    "healthyMax": 38,
     "absoluteMin": 32,
     "absoluteMax": 42,
     "value": 37

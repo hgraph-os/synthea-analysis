@@ -1,6 +1,6 @@
 Package.describe({
     name: 'goinvo:synthea-analysis',
-    version: '0.3.2',
+    version: '0.3.3',
     summary: 'Dashboard for Synthea analysis',
     git: 'https://github.com/symptomatic/synthea-analysis',
     documentation: 'README.md'
@@ -9,15 +9,19 @@ Package.describe({
 Package.onUse(function(api) {
     api.versionsFrom('1.4');
     
-    api.use('meteor-base@1.4.0');
-    api.use('ecmascript@0.13.0');
+    api.use('meteor@1.9.3');
+    api.use('webapp@1.10.0');
+    api.use('ddp@1.4.0');
+    api.use('livedata@1.0.18');
+    api.use('es5-shim@4.8.0');
+    api.use('ecmascript@0.15.0');
+
     api.use('react-meteor-data@2.1.2');
     api.use('session');
     api.use('mongo');
      
-    api.use('clinical:hl7-fhir-data-infrastructure@6.7.3');
+    api.use('clinical:hl7-fhir-data-infrastructure@6.10.1');
 
-    api.addAssets('data/Agustín529_Caldera106_01358a2c-d615-85fe-1665-cbb1b3feeeaa.json', 'client');
     api.addAssets('data/Andrea7_Santillán790_befab5de-4562-37da-07d3-1a2b188b679a.json', 'client');
     api.addAssets('data/Ann985_Medhurst46_c7f40e00-f81b-a1cc-8940-9bb3ea4cb235.json', 'client');
     api.addAssets('data/Annmarie79_Erdman779_f4e841bc-b078-6d1d-f621-476d6481aa4d.json', 'client');
@@ -94,8 +98,6 @@ Package.onUse(function(api) {
     api.addAssets('data/Porfirio146_Hermiston71_a7c4f081-51ab-84d7-9488-15c2d8236328.json', 'client');
     api.addAssets('data/Raleigh478_Batz141_0aa07f50-e335-16aa-cdd8-85fa4049faf1.json', 'client');
     api.addAssets('data/Rayford811_Hegmann834_41458a0b-c1e0-3a75-ce9d-95542f5f3dde.json', 'client');
-    api.addAssets('data/Ricardo560_Klocko335_de74446d-31de-a6c8-f2a7-93374dd19eca.json', 'client');
-    api.addAssets('data/Ricardo560_Vélez150_b9d62de8-f70b-09b2-1e6c-6ab47fae02c1.json', 'client');
     api.addAssets('data/Roberto515_Veum823_023cba6e-da66-d73e-56e2-88d4d13d0f26.json', 'client');
     api.addAssets('data/Ronni748_Yundt842_226bf9b4-7e4e-1931-ee5b-60f3ea1b7899.json', 'client');
     api.addAssets('data/Roxanna261_Beahan375_919f7be3-4f6d-d09c-72df-55c18c45d07f.json', 'client');

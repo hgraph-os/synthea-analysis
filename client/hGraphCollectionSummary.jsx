@@ -23,7 +23,7 @@ if(Package['symptomatic:data-management']){
 }
 
 import HGraph from 'hgraph-react'; // symlinked with 'yarn link' from project root.
-import { StyledCard, PageCanvas, PatientCard, PatientsTable } from 'material-fhir-ui';
+import { StyledCard, PageCanvas, PatientCard, PatientsTable } from 'fhir-starter';
 
 import { 
   AllergyIntolerancesTable, 
@@ -445,10 +445,10 @@ export function hGraphCollectionSummary(props){
   resultingData = generateCollectionCounts(data);
 
 
-  console.log('resultingData', resultingData)
+  // console.log('resultingData', resultingData)
 
   data.currentData = resultingData;
-  console.log('data.currentData', data.currentData)
+  // console.log('data.currentData', data.currentData)
 
 
   console.log("hGraphCollectionSummary[data]", data);  
@@ -550,7 +550,7 @@ export function hGraphCollectionSummary(props){
             { collectionManagementElements }                                                   
           </CardContent>
         </Grid>
-        <Grid item lg={8} justify="center" style={{textAlign: 'center'}} >
+        <Grid item lg={8} style={{textAlign: 'center'}} >
 
           <HGraph
             data={ data.currentData }
